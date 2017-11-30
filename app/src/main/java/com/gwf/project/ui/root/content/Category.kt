@@ -2,7 +2,7 @@ package com.gwf.project.ui.root.content
 
 import android.support.v4.view.ViewPager
 import android.view.ViewGroup
-import com.gwf.project.util.ui.DynamicUI
+import com.gwf.project.dynamicui.DynamicUI
 import android.view.View
 import com.gwf.project.R
 import com.gwf.project.ui.Root

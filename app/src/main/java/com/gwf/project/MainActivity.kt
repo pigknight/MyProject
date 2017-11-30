@@ -1,10 +1,10 @@
 package com.gwf.project
 
 import android.content.res.Configuration
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -68,12 +68,12 @@ class MainActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
     }
 
-    override fun onKeyDown(keyCode:Int, event:KeyEvent): Boolean {
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if( Root.getInstance().dispatchKeyEvent(event) )
+            if (Root.getInstance().dispatchKeyEvent(event))
                 return true
 
-            if ( !mWaitForSecondKey ) {
+            if (!mWaitForSecondKey) {
                 mWaitForSecondKey = true
 
                 Toast.makeText(this, "Press again to exit!", Toast.LENGTH_SHORT).show()
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
     //==============================================================================
 
-    private fun initUI(){
+    private fun initUI() {
         //Init
         Root.initInstance(this)
         //Root.getInstance().setDefaultEnterAnimation(R.anim.push_right_in, R.anim.push_left_out)
@@ -118,9 +118,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-    * A native method that is implemented by the 'native-lib' native library,
-    * which is packaged with this application.
-    */
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
+     */
     external fun stringFromJNI(): String
     //================================Native===================================End
 }

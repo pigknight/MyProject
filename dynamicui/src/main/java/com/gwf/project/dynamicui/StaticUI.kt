@@ -1,4 +1,4 @@
-package com.gwf.project.util.ui
+package com.gwf.project.dynamicui
 
 import android.content.Context
 import android.content.res.Configuration
@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ViewAnimator
-import java.util.HashMap
+import java.util.*
 
 /**
  * Created by Administrator on 2017/9/28.
@@ -85,7 +85,7 @@ abstract class StaticUI {
         /*
     	 * The Root StaticUI must be initialized immediately
     	 */
-        if ( isRoot ) {
+        if (isRoot) {
             initialize()
 
             mIsAttached = true
@@ -98,7 +98,7 @@ abstract class StaticUI {
         mDefaultOutAnimation = AnimationUtils.loadAnimation(mContext, outAnimRes)
     }
 
-    fun setDefaultAnimation( inAnim: Animation?, outAnim: Animation?) {
+    fun setDefaultAnimation(inAnim: Animation?, outAnim: Animation?) {
         mDefaultInAnimation = inAnim
         mDefaultOutAnimation = outAnim
     }
@@ -146,21 +146,21 @@ abstract class StaticUI {
     /*
      * Activity.onPause();
      */
-    open fun onPause(){
+    open fun onPause() {
 
     }
 
     /*
      * Activity.onResume();
      */
-    open fun onResume(){
+    open fun onResume() {
 
     }
 
     /*
      * This is called while receive Key Event
      */
-    open fun onKeyEvent(event: KeyEvent): Boolean{
+    open fun onKeyEvent(event: KeyEvent): Boolean {
         return false
     }
 
@@ -169,7 +169,7 @@ abstract class StaticUI {
      * Or
      * Configuration.ORIENTATION_LANDSCAPE
      */
-    open fun isOrientationDependent(): Boolean{
+    open fun isOrientationDependent(): Boolean {
         return false
     }
 
@@ -215,7 +215,7 @@ abstract class StaticUI {
         try {
             if (mChildUIMap.size > 0) {
                 for (child in mChildUIMap.values) {
-                    if ( child != null ) {
+                    if (child != null) {
                         with(child) {
                             mIsAttached = false
                             dispatchOnHide()
@@ -307,7 +307,7 @@ abstract class StaticUI {
         if (mCurChildKey != null && mCurChildKey != "") {
             val curShow = mChildUIMap[mCurChildKey!!]
             if (curShow != null) {
-                if ( curShow.dispatchKeyEvent(event) )
+                if (curShow.dispatchKeyEvent(event))
                     return true
             }
         }
@@ -391,7 +391,7 @@ abstract class StaticUI {
             return false//throw new RuntimeException(TAG + ": mChildUIContainer was null.");
         }
 
-        if (childKey == null && mCurChildKey != null ) {
+        if (childKey == null && mCurChildKey != null) {
             val currentUI = mChildUIMap[mCurChildKey!!]
             if (currentUI != null) {
                 currentUI.dispatchOnHide()
@@ -497,7 +497,7 @@ abstract class StaticUI {
     fun dispatchOrientationChanged(newConfig: Configuration) {
         if (mChildUIMap.size > 0) {
             for (childKey in mChildUIMap.keys) {
-                if( childKey != null ) {
+                if (childKey != null) {
                     val child = mChildUIMap[childKey]
                     if (child != null && child is StaticUI) {
                         if (child.isOrientationDependent()) {

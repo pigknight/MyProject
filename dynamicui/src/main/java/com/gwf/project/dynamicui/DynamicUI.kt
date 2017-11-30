@@ -1,10 +1,10 @@
-package com.gwf.project.util.ui
+package com.gwf.project.dynamicui
 
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Handler
-import android.os.Message
 import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -37,17 +37,17 @@ abstract class DynamicUI {
     companion object {
         val TAG: String = DynamicUI::class.java.getSimpleName()
 
-        private var DEBUG:Boolean = true
+        private var DEBUG: Boolean = true
 
-        fun log(msg:String) {
-            if( DEBUG )
-                Log.i(TAG,msg)
+        fun log(msg: String) {
+            if (DEBUG)
+                Log.i(TAG, msg)
         }
     }
 
-    private var mParentUI:DynamicUI? = null
+    private var mParentUI: DynamicUI? = null
 
-    private data class Vector2<N,C>(var className:N, var childUI:C)
+    private data class Vector2<N, C>(var className: N, var childUI: C)
 
     //Application Context
     protected var mContext: Context by Delegates.notNull()
@@ -74,7 +74,7 @@ abstract class DynamicUI {
      * Saved the child StaticUI object be registered,which will be switched
      * by the childKey registered.
      */
-    private val mChildStack = Stack< Vector2<String/*className*/,out DynamicUI/*childUI*/> >()
+    private val mChildStack = Stack<Vector2<String/*className*/, out DynamicUI/*childUI*/>>()
 
     private var mIsAttached = false
 
@@ -86,17 +86,17 @@ abstract class DynamicUI {
     constructor()
 
     constructor(context: Context, isRoot: Boolean = false) {
-        setContext(context,isRoot)
+        setContext(context, isRoot)
     }
 
-    private fun setContext(context:Context, isRoot: Boolean = false){
+    private fun setContext(context: Context, isRoot: Boolean = false) {
         mContext = context
         mIsInitialized = false
 
         /*
     	 * The Root DynamicUI must be initialized immediately
     	 */
-        if ( isRoot ) {
+        if (isRoot) {
             initialize()
 
             mIsAttached = true
@@ -109,7 +109,7 @@ abstract class DynamicUI {
         mDefaultEnterOutAnimation = AnimationUtils.loadAnimation(mContext, outAnimRes)
     }
 
-    fun setDefaultEnterAnimation( inAnim: Animation?, outAnim: Animation?) {
+    fun setDefaultEnterAnimation(inAnim: Animation?, outAnim: Animation?) {
         mDefaultEnterInAnimation = inAnim
         mDefaultEnterOutAnimation = outAnim
     }
@@ -119,7 +119,7 @@ abstract class DynamicUI {
         mDefaultExitOutAnimation = AnimationUtils.loadAnimation(mContext, outAnimRes)
     }
 
-    fun setDefaultExitAnimation( inAnim: Animation?, outAnim: Animation?) {
+    fun setDefaultExitAnimation(inAnim: Animation?, outAnim: Animation?) {
         mDefaultExitInAnimation = inAnim
         mDefaultExitOutAnimation = outAnim
     }
@@ -148,7 +148,7 @@ abstract class DynamicUI {
      * This is called while the StaticUI is no longer in use.
      * You can release the StaticUI(layout) itself.
      */
-    open/*abstract*/ fun onFinalize(){
+    open/*abstract*/ fun onFinalize() {
 
     }
 
@@ -168,21 +168,21 @@ abstract class DynamicUI {
     /*
      * Activity.onPause();
      */
-    open fun onPause(){
+    open fun onPause() {
 
     }
 
     /*
      * Activity.onResume();
      */
-    open fun onResume(){
+    open fun onResume() {
 
     }
 
     /*
      * This is called while receive Key Event
      */
-    open fun onKeyEvent(event: KeyEvent): Boolean{
+    open fun onKeyEvent(event: KeyEvent): Boolean {
         return false
     }
 
@@ -191,7 +191,7 @@ abstract class DynamicUI {
      * Or
      * Configuration.ORIENTATION_LANDSCAPE
      */
-    open fun isOrientationDependent(): Boolean{
+    open fun isOrientationDependent(): Boolean {
         return false
     }
 
@@ -248,11 +248,11 @@ abstract class DynamicUI {
                 }
             }*/
             for (child in mChildStack) {
-                if ( child != null ) {
+                if (child != null) {
                     var uiClassName = child.className
                     log("Call dispatchRelease on $uiClassName")
                     var ui = child.childUI
-                    if( ui != null ) {
+                    if (ui != null) {
                         with(ui) {
                             mIsAttached = false
                             dispatchOnHide()
@@ -294,9 +294,9 @@ abstract class DynamicUI {
                     mChildUIViewAnimator?.removeView(ui.getContainer())
                 }
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -335,9 +335,9 @@ abstract class DynamicUI {
                 var curShowUI = curShowUIVector2.childUI
                 curShowUI?.dispatchOnShow(reshow)
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -358,9 +358,9 @@ abstract class DynamicUI {
                 var curShowUI = curShowUIVector2.childUI
                 curShowUI?.dispatchOnHide()
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -381,9 +381,9 @@ abstract class DynamicUI {
                 var curShowUI = curShowUIVector2.childUI
                 curShowUI?.dispatchOnPause()
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -404,9 +404,9 @@ abstract class DynamicUI {
                 var curShowUI = curShowUIVector2.childUI
                 curShowUI?.dispatchOnResume()
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -467,16 +467,16 @@ abstract class DynamicUI {
                 if (curShowUI != null && curShowUI.dispatchKeyEvent(event))
                     return true
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
         return onKeyEvent(event)
     }
 
-    fun <T> findUI(clazz:Class<T>) : DynamicUI? {
+    fun <T> findUI(clazz: Class<T>): DynamicUI? {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             throw RuntimeException(TAG + ": findUI(...) must be called in main thread.")
 
@@ -487,14 +487,14 @@ abstract class DynamicUI {
             val curShowUIVector2 = mChildStack.peek()
             if (curShowUIVector2 != null) {
                 var uiClassName = curShowUIVector2.className
-                if( uiClassName != null && uiClassName == clazz.simpleName ){
+                if (uiClassName != null && uiClassName == clazz.simpleName) {
                     return curShowUIVector2.childUI
-                }else
+                } else
                     return curShowUIVector2.childUI.findUI(clazz)
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -502,7 +502,7 @@ abstract class DynamicUI {
     }
 
 
-    fun <T> enterUI(clazz:Class<T>,inAnimRes: Int = -1, outAnimRes: Int = -1){
+    fun <T> enterUI(clazz: Class<T>, inAnimRes: Int = -1, outAnimRes: Int = -1) {
         var inAnimation: Animation? = null
         if (inAnimRes > 0)
             inAnimation = AnimationUtils.loadAnimation(mContext, inAnimRes)
@@ -510,10 +510,10 @@ abstract class DynamicUI {
         if (outAnimRes > 0)
             outAnimation = AnimationUtils.loadAnimation(mContext, outAnimRes)
 
-        enterUIInner(clazz,inAnimation, outAnimation)
+        enterUIInner(clazz, inAnimation, outAnimation)
     }
 
-    private fun <T> enterUIInner(clazz:Class<T>,inAnim: Animation? = null, outAnim: Animation? = null){
+    private fun <T> enterUIInner(clazz: Class<T>, inAnim: Animation? = null, outAnim: Animation? = null) {
         //安全性检查1
         if (Looper.myLooper() != Looper.getMainLooper()) {
             throw RuntimeException(TAG + ": showUI(...) must be called in main thread.")
@@ -528,7 +528,7 @@ abstract class DynamicUI {
         var stack = mChildStack.filter {
             it.className == clazz.simpleName
         }
-        if( !stack?.isEmpty() )
+        if (!stack?.isEmpty())
             throw RuntimeException(TAG + ": The UI[${clazz.simpleName}] is showing in current parent.")
         /*for( uiVector2 in mChildStack ){
             if( uiVector2?.className == clazz.simpleName ){
@@ -536,33 +536,33 @@ abstract class DynamicUI {
             }
         }*/
 
-        var previousUi:DynamicUI? = null
+        var previousUi: DynamicUI? = null
 
         try {
             var uiVector2 = mChildStack.peek()
             previousUi = uiVector2?.childUI
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        var newUi:DynamicUI = clazz.newInstance() as DynamicUI
-        if( newUi != null ) {
+        var newUi: DynamicUI = clazz.newInstance() as DynamicUI
+        if (newUi != null) {
             newUi.setContext(mContext, false)
             newUi.mParentUI = this //Set Parent UI
-            mChildStack.push( Vector2(clazz.simpleName, newUi))
+            mChildStack.push(Vector2(clazz.simpleName, newUi))
 
             var reshow = true
-            if( !newUi.isInitialized() ) {
+            if (!newUi.isInitialized()) {
                 newUi.initialize()
                 reshow = false
             }
 
             mChildUIViewAnimator!!.addView(newUi!!.getContainer(), mChildUIViewAnimator!!.childCount, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
 
-            var inAnimation:Animation? = inAnim
-            var outAnimation:Animation? = outAnim
+            var inAnimation: Animation? = inAnim
+            var outAnimation: Animation? = outAnim
 
             if (inAnimation == null)
                 inAnimation = mDefaultEnterInAnimation
@@ -593,7 +593,7 @@ abstract class DynamicUI {
         }
     }
 
-    fun exitSelf(inAnimRes: Int = -1, outAnimRes: Int = -1){
+    fun exitSelf(inAnimRes: Int = -1, outAnimRes: Int = -1) {
         var inAnimation: Animation? = null
         if (inAnimRes > 0)
             inAnimation = AnimationUtils.loadAnimation(mContext, inAnimRes)
@@ -604,7 +604,7 @@ abstract class DynamicUI {
         exitSelfInner(inAnimation, outAnimation)
     }
 
-    private fun exitSelfInner(inAnim: Animation? = null, outAnim: Animation? = null){
+    private fun exitSelfInner(inAnim: Animation? = null, outAnim: Animation? = null) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             throw RuntimeException(TAG + ": showUI(...) must be called in main thread.")
         }
@@ -613,15 +613,15 @@ abstract class DynamicUI {
         //首先验证当前UI时候顶端窗口
         val curShowUIVector2 = mParentUI?.mChildStack!!.peek()
         if (curShowUIVector2 != null) {
-            if( curShowUIVector2.className == this.javaClass.simpleName ){
-                mParentUI?.exitTopUIInner(inAnim,outAnim) //在父UI上调用
-            }else{
+            if (curShowUIVector2.className == this.javaClass.simpleName) {
+                mParentUI?.exitTopUIInner(inAnim, outAnim) //在父UI上调用
+            } else {
                 throw RuntimeException(TAG + ": this UI isn't the top UI.")
             }
         }
     }
 
-    fun exitTopUI(inAnimRes: Int = -1, outAnimRes: Int = -1){
+    fun exitTopUI(inAnimRes: Int = -1, outAnimRes: Int = -1) {
         var inAnimation: Animation? = null
         if (inAnimRes > 0)
             inAnimation = AnimationUtils.loadAnimation(mContext, inAnimRes)
@@ -632,7 +632,7 @@ abstract class DynamicUI {
         exitTopUIInner(inAnimation, outAnimation)
     }
 
-    private fun exitTopUIInner(inAnim: Animation? = null, outAnim: Animation? = null){
+    private fun exitTopUIInner(inAnim: Animation? = null, outAnim: Animation? = null) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             throw RuntimeException(TAG + ": showUI(...) must be called in main thread.")
         }
@@ -647,8 +647,8 @@ abstract class DynamicUI {
             val toShowUIVector2 = mChildStack.peek()
             if (toExitUIVector2 != null) {
 
-                var inAnimation:Animation? = inAnim
-                var outAnimation:Animation? = outAnim
+                var inAnimation: Animation? = inAnim
+                var outAnimation: Animation? = outAnim
 
                 //Show In
                 if (inAnimation == null)
@@ -678,38 +678,38 @@ abstract class DynamicUI {
 
                 toExitUIVector2.childUI.mIsAttached = false//
 
-                if ( outAnimation == null && previousContainer != null) {
+                if (outAnimation == null && previousContainer != null) {
                     mChildUIViewAnimator!!.removeView(previousContainer)
                 }
 
                 //显示前一个UI
-                toShowUIVector2?.childUI?.dispatchOnShow( true )
+                toShowUIVector2?.childUI?.dispatchOnShow(true)
             }
-        }catch(e:EmptyStackException){
+        } catch (e: EmptyStackException) {
 
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    fun dumpUIArch(){
+    fun dumpUIArch() {
         log("UIArch:  ${javaClass.simpleName} *")
-        if( !mChildStack.empty() ){
-            dumpUIArchInner( this,"",true)
+        if (!mChildStack.empty()) {
+            dumpUIArchInner(this, "", true)
         }
     }
 
-    private fun dumpUIArchInner(ui:DynamicUI,space:String,isTop:Boolean){
+    private fun dumpUIArchInner(ui: DynamicUI, space: String, isTop: Boolean) {
         var count = ui.mChildStack.size
-        for( i in ui.mChildStack.indices ){
+        for (i in ui.mChildStack.indices) {
             var uiVector2 = ui.mChildStack[i]
-            if( uiVector2?.childUI != null ){
-                if( i == count -1 && isTop )
+            if (uiVector2?.childUI != null) {
+                if (i == count - 1 && isTop)
                     log("UIArch:  $space|--- ${uiVector2.childUI.javaClass.simpleName} *")
                 else
                     log("UIArch:  $space|--- ${uiVector2.childUI.javaClass.simpleName}")
-                if( !uiVector2.childUI.mChildStack.empty() ) {
-                    dumpUIArchInner(uiVector2.childUI, space + "   ", (i == count -1 && isTop) )
+                if (!uiVector2.childUI.mChildStack.empty()) {
+                    dumpUIArchInner(uiVector2.childUI, space + "   ", (i == count - 1 && isTop))
                 }
             }
         }

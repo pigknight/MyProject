@@ -4,17 +4,17 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import com.gwf.project.R
+import com.gwf.project.dynamicui.DynamicUI
 import com.gwf.project.ui.Root
-import com.gwf.project.util.ui.DynamicUI
 import kotlinx.android.synthetic.main.title_bar.view.*
 
 
 /**
  * Created by Administrator on 2017/9/29.
  */
-class Playing: DynamicUI() {
+class Playing : DynamicUI() {
     companion object {
-        private val TAG:String = Playing::class.java.getSimpleName()
+        private val TAG: String = Playing::class.java.getSimpleName()
     }
 
     override fun onCreateContainer(): ViewGroup {
@@ -27,8 +27,8 @@ class Playing: DynamicUI() {
 
     override fun onInitialize() {
         mContainer?.title?.text = "Playing"
-		mContainer?.back?.setOnClickListener {
-            this.exitSelf(R.anim.push_top_in,R.anim.push_bootom_out)
+        mContainer?.back?.setOnClickListener {
+            this.exitSelf(R.anim.push_top_in, R.anim.push_bootom_out)
         }
     }
 
@@ -41,8 +41,8 @@ class Playing: DynamicUI() {
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        if( event.keyCode == KeyEvent.KEYCODE_BACK ){
-            Root.getInstance().exitTopUI(R.anim.push_top_in,R.anim.push_bootom_out)
+        if (event.keyCode == KeyEvent.KEYCODE_BACK) {
+            Root.getInstance().exitTopUI(R.anim.push_top_in, R.anim.push_bootom_out)
             return true
         }
 

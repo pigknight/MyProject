@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MyProject.iml" filepath="$PROJECT_DIR$/MyProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dynamicui/dynamicui.iml" filepath="$PROJECT_DIR$/dynamicui/dynamicui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fragmentui/fragmentui.iml" filepath="$PROJECT_DIR$/fragmentui/fragmentui.iml" />
     </modules>
   </component>
 </project>

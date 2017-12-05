@@ -1,1 +1,1 @@
-include ':app', ':dynamicui'
+include ':app', ':dynamicui', ':fragmentui'

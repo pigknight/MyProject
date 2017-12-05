@@ -9,9 +9,9 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.gwf.project.ui.Root
-import com.gwf.project.ui.root.Content
-import com.gwf.project.ui.root.content.Category
+import com.gwf.project.ui2.Root
+import com.gwf.project.ui2.root.Content
+import com.gwf.project.ui2.root.content.Category
 
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.java.getSimpleName()
@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
         mMainContainer = View.inflate(this, R.layout.activity_main, null) as ViewGroup
         setContentView(mMainContainer)
 
-        initUI()
+        //initUI()
+        initUI2()
 
         // Example of a call to a native method
         /*val tv = findViewById(R.id.sample_text) as TextView
@@ -52,18 +53,18 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        Root.getInstance().dispatchOnPause()
+        //Root.getInstance().dispatchOnPause()
     }
 
     override fun onResume() {
         super.onPause()
 
-        Root.getInstance().dispatchOnResume()
+        //Root.getInstance().dispatchOnResume()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
 
-        Root.getInstance().dispatchOrientationChanged(newConfig)
+        //Root.getInstance().dispatchOrientationChanged(newConfig)
 
         super.onConfigurationChanged(newConfig)
     }
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     }
     //==============================================================================
 
-    private fun initUI() {
+    /*private fun initUI() {
         //Init
         Root.initInstance(this)
         //Root.getInstance().setDefaultEnterAnimation(R.anim.push_right_in, R.anim.push_left_out)
@@ -104,6 +105,19 @@ class MainActivity : AppCompatActivity() {
         Root.getInstance().enterUI(Content::class.java)
         Root.getInstance().findUI(Content::class.java)?.enterUI(Category::class.java)
         //Root.getInstance().findUI(Category::class.java)?.showUI(CategoryLocal::class.java)
+
+        //Register
+        //Root.getInstance().re
+    }*/
+
+    private fun initUI2() {
+        //Init
+        Root.initInstance(this)
+        //Root.getInstance().setDefaultEnterAnimation(R.anim.push_right_in, R.anim.push_left_out)
+        //Root.getInstance().setDefaultExitAnimation(R.anim.push_left_in, R.anim.push_right_out)
+
+        Root.getInstance().enterUI(Content::class.java)
+        //Root.getInstance().findUI(Content::class.java)?.enterUI(Category::class.java)
 
         //Register
         //Root.getInstance().re
